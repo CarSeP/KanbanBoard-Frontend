@@ -12,6 +12,7 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { toast } from "sonner";
 
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/board";
 
@@ -34,8 +35,13 @@ function AddBoardComponent() {
     const response = await fetch(request);
 
     if (response.ok && closeRef.current) {
+      toast.success("The board has been successfully created.");
       closeRef.current.click();
+      return;
     }
+
+    toast.error("An error occurred while creating the board.");
+
   };
   return (
     <Dialog>

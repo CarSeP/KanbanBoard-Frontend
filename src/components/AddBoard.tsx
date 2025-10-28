@@ -1,4 +1,4 @@
-import { useRef, type FormEvent } from "react";
+import { useEffect, useRef, type FormEvent } from "react";
 import { Button } from "./ui/button";
 import { Card, CardTitle } from "./ui/card";
 import {
@@ -13,36 +13,46 @@ import {
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { LoaderCircle } from "lucide-react";
 
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/board";
 
 function AddBoardComponent() {
   const closeRef = useRef<HTMLButtonElement>(null);
 
-  const onSubmit = async (e: FormEvent) => {
+  const { mutate, isPending, error, data } = useMutation({
+    mutationFn: async (name: string) => {
+      const response = await fetch(URL, {
+        method: "PUT",
+        body: JSON.stringify({ name }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.json();
+    },
+  });
+
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const name = e.target.name.value;
+    mutate(name);
+  };
 
-    const request = new Request(URL, {
-      method: "PUT",
-      body: JSON.stringify({ name }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  useEffect(() => {
+    if (error || (data && !data.success)) {
+      toast.error("An error occurred while creating the board.");
+    }
 
-    const response = await fetch(request);
-
-    if (response.ok && closeRef.current) {
+    if (data && data.success && closeRef.current) {
       toast.success("The board has been successfully created.");
       closeRef.current.click();
       return;
     }
+  }, [error, data]);
 
-    toast.error("An error occurred while creating the board.");
-
-  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -75,8 +85,13 @@ function AddBoardComponent() {
                 Cancel
               </Button>
             </DialogClose>
-            <Button className="cursor-pointer" type="submit">
+            <Button
+              className="cursor-pointer"
+              type="submit"
+              disabled={isPending}
+            >
               Submit
+              {isPending && <LoaderCircle className="animate-spin" />}
             </Button>
           </DialogFooter>
         </form>

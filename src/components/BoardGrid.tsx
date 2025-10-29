@@ -28,7 +28,7 @@ function BoardGridComponent() {
 
   return (
     <section className="flex flex-wrap">
-      {data.boards &&
+      {data?.boards &&
         data.boards.map((board: Board) => (
           <BoardCardComponent key={board.id} board={board} />
         ))}

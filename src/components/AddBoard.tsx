@@ -15,11 +15,21 @@ import { Label } from "./ui/label";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
+import { useForm } from "@tanstack/react-form";
 
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/board";
 
 function AddBoardComponent() {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const form = useForm({
+    defaultValues: {
+      name: "",
+    },
+    onSubmit: async ({ value }) => {
+      mutate(value.name);
+      form.reset();
+    },
+  });
 
   const { mutate, isPending, error, data } = useMutation({
     mutationFn: async (name: string) => {
@@ -36,9 +46,7 @@ function AddBoardComponent() {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-
-    const name = e.target.name.value;
-    mutate(name);
+    form.handleSubmit();
   };
 
   useEffect(() => {
@@ -71,8 +79,35 @@ function AddBoardComponent() {
         <form onSubmit={onSubmit}>
           <div className="grid gap-4 pb-4">
             <div className="grid gap-3">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" />
+              <form.Field
+                name="name"
+                validators={{
+                  onChange: ({ value }) =>
+                    !value
+                      ? "Name is required"
+                      : value.length > 30
+                      ? "The board must have a maximum of 30 characters"
+                      : undefined,
+                  onChangeAsyncDebounceMs: 500,
+                }}
+                children={(field) => (
+                  <>
+                    <Label htmlFor={field.name}>Name</Label>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                    />
+                    {field.state.meta.errors ? (
+                      <p className="text-red-500 text-sm mt-1">
+                        {field.state.meta.errors.join(", ")}
+                      </p>
+                    ) : null}
+                  </>
+                )}
+              />
             </div>
           </div>
           <DialogFooter>

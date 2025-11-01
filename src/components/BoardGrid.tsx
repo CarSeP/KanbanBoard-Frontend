@@ -1,38 +1,39 @@
-import { useQuery } from "@tanstack/react-query";
 import type { Board } from "../interfaces/board.interface";
 import BoardCardComponent from "./BoardCard";
 import AddBoardComponent from "./AddBoard";
-import { toast } from "sonner";
-import LoaderComponent from "./Loader";
-import { useEffect } from "react";
+import BoardDetail from "./BoardDetail";
+import { useState } from "react";
+interface Props {
+  boards: Board[];
+}
 
-const URL = import.meta.env.VITE_BACKEND_API_URL + "/board";
+function BoardGridComponent({ boards }: Props) {
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [selectedBoard, setSelectedBoard] = useState<Board | undefined>();
 
-function BoardGridComponent() {
-  const { isPending, error, data } = useQuery({
-    queryKey: ["getBoards"],
-    queryFn: () => fetch(URL).then((res) => res.json()),
-  });
-
-  useEffect(() => {
-    if (error || (data && !data.success)) {
-      toast.error(
-        "An error occurred while trying to retrieve data from the server.",
-      );
-    }
-  }, [error, data]);
-
-  if (isPending) {
-    return <LoaderComponent />;
-  }
+  const onOpenDetailModal = (board: Board) => {
+    setSelectedBoard(board);
+    setDetailModalOpen(true);
+  };
 
   return (
-    <section className="flex flex-wrap">
-      {data?.boards &&
-        data.boards.map((board: Board) => (
-          <BoardCardComponent key={board.id} board={board} />
+    <section className="flex flex-wrap h-full overflow-y-scroll">
+      {boards &&
+        boards.map((board: Board) => (
+          <BoardCardComponent
+            key={board.id}
+            board={board}
+            openDetailModal={onOpenDetailModal}
+          />
         ))}
       <AddBoardComponent />
+      <BoardDetail
+        open={detailModalOpen}
+        onClose={() => {
+          setDetailModalOpen(false);
+        }}
+        board={selectedBoard}
+      />
     </section>
   );
 }

@@ -11,9 +11,10 @@ import {
 
 interface Props {
   board: Board;
+  openDetailModal: (board: Board) => void;
 }
 
-function BoardCardComponent({ board }: Props) {
+function BoardCardComponent({ board, openDetailModal }: Props) {
   return (
     <div className="w-96 h-46 p-6 flex justify-center">
       <Card className="w-full max-w-sm cursor-pointer hover:bg-accent">
@@ -31,7 +32,14 @@ function BoardCardComponent({ board }: Props) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40" align="start">
-              <DropdownMenuLabel>Info</DropdownMenuLabel>
+              <DropdownMenuLabel
+              className="cursor-pointer"
+                onClick={() => {
+                  openDetailModal(board);
+                }}
+              >
+                Info
+              </DropdownMenuLabel>
               <DropdownMenuLabel>Edit Board</DropdownMenuLabel>
               <DropdownMenuLabel>Delete Board</DropdownMenuLabel>
             </DropdownMenuContent>

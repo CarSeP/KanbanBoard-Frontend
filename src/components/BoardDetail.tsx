@@ -2,12 +2,10 @@ import { SquareKanban } from "lucide-react";
 import type { Board } from "../interfaces/board.interface";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 
@@ -22,10 +20,10 @@ function BoardDetailComponent({ open, onClose, board }: Props) {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <div className="flex gap-1 items-center">
+          <DialogTitle className="flex gap-1 items-center">
             <SquareKanban />
             Board Information
-          </div>
+          </DialogTitle>
         </DialogHeader>
         {board && (
           <div>

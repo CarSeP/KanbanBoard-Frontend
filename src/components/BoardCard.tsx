@@ -8,13 +8,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useSetAtom } from "jotai";
+import { setModalAtom, setModalDataAtom } from "../atoms/modal";
 
 interface Props {
   board: Board;
-  openModal: (board: Board, modal: string) => void;
 }
 
-function BoardCardComponent({ board, openModal }: Props) {
+function BoardCardComponent({ board }: Props) {
+  const setModal = useSetAtom(setModalAtom);
+  const setModalData = useSetAtom(setModalDataAtom);
+
   return (
     <div className="w-96 h-46 p-6 flex justify-center">
       <Card className="w-full max-w-sm cursor-pointer hover:bg-accent">
@@ -35,7 +39,8 @@ function BoardCardComponent({ board, openModal }: Props) {
               <DropdownMenuLabel
                 className="cursor-pointer"
                 onClick={() => {
-                  openModal(board, "detail");
+                  setModal("detail");
+                  setModalData(board);
                 }}
               >
                 Info
@@ -43,7 +48,8 @@ function BoardCardComponent({ board, openModal }: Props) {
               <DropdownMenuLabel
                 className="cursor-pointer"
                 onClick={() => {
-                  openModal(board, "upsert");
+                  setModal("upsert");
+                  setModalData(board);
                 }}
               >
                 Edit Board
@@ -51,7 +57,8 @@ function BoardCardComponent({ board, openModal }: Props) {
               <DropdownMenuLabel
                 className="cursor-pointer"
                 onClick={() => {
-                  openModal(board, "delete");
+                  setModal("delete");
+                  setModalData(board);
                 }}
               >
                 Delete Board

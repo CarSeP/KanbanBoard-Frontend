@@ -1,33 +1,30 @@
 import type { Board } from "../interfaces/board.interface";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "./ui/dialog";
+import { DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
-import { useRef, type FormEvent } from "react";
+import { type FormEvent } from "react";
 import { LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
-  open: boolean;
   onClose: () => void;
   board: Board | undefined;
 }
 
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/board/";
 
-function DeleteBoardComponent({ open, onClose, board }: Props) {
-  const closeRef = useRef<HTMLButtonElement>(null);
+function DeleteBoardComponent({ onClose, board }: Props) {
   const form = useForm({
     onSubmit: async () => {
       mutate();
     },
   });
+
+  const onCloseModal = () => {
+    form.reset();
+    onClose();
+  };
 
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
@@ -37,16 +34,11 @@ function DeleteBoardComponent({ open, onClose, board }: Props) {
         });
 
         if (!response.ok) {
-          toast.error("An error occurred while deleting the board.");
+          throw new Error();
         }
 
-        if (response.ok) {
-          toast.success("The board has been successfully deleted.");
-        }
-
-        if (closeRef.current) {
-          closeRef.current.click();
-        }
+        toast.success("The board has been successfully deleted.");
+        onCloseModal();
 
         return response.json();
       } catch (error) {
@@ -61,35 +53,24 @@ function DeleteBoardComponent({ open, onClose, board }: Props) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent>
-        <form onSubmit={onSubmit}>
-          <DialogHeader>
-            <DialogTitle>
-              Are you sure you want to delete this board?
-            </DialogTitle>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              className="cursor-pointer"
-              variant="outline"
-              onClick={onClose}
-              ref={closeRef}
-              type="button"
-            >
-              Cancel
-            </Button>
-            <Button
-              className="cursor-pointer"
-              type="submit"
-              disabled={isPending}
-            >
-              Delete {isPending && <LoaderCircle className="animate-spin" />}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <form onSubmit={onSubmit}>
+      <DialogHeader>
+        <DialogTitle>Are you sure you want to delete this board?</DialogTitle>
+      </DialogHeader>
+      <DialogFooter>
+        <Button
+          className="cursor-pointer"
+          variant="outline"
+          onClick={onCloseModal}
+          type="button"
+        >
+          Cancel
+        </Button>
+        <Button className="cursor-pointer" type="submit" disabled={isPending}>
+          Delete {isPending && <LoaderCircle className="animate-spin" />}
+        </Button>
+      </DialogFooter>
+    </form>
   );
 }
 

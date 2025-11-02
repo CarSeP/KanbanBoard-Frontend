@@ -3,17 +3,28 @@ import BoardCardComponent from "./BoardCard";
 import AddBoardComponent from "./AddBoard";
 import BoardDetail from "./BoardDetail";
 import { useState } from "react";
+import DeleteBoardComponent from "./DeleteBoard";
 interface Props {
   boards: Board[];
 }
 
 function BoardGridComponent({ boards }: Props) {
   const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedBoard, setSelectedBoard] = useState<Board | undefined>();
 
-  const onOpenDetailModal = (board: Board) => {
+  const onOpenModal = (board: Board, modal: string) => {
     setSelectedBoard(board);
-    setDetailModalOpen(true);
+
+    if (modal === "detail") {
+      setDetailModalOpen(true);
+      return;
+    }
+
+    if (modal === "delete") {
+      setDeleteModalOpen(true);
+      return;
+    }
   };
 
   return (
@@ -23,7 +34,7 @@ function BoardGridComponent({ boards }: Props) {
           <BoardCardComponent
             key={board.id}
             board={board}
-            openDetailModal={onOpenDetailModal}
+            openModal={onOpenModal}
           />
         ))}
       <AddBoardComponent />
@@ -31,6 +42,13 @@ function BoardGridComponent({ boards }: Props) {
         open={detailModalOpen}
         onClose={() => {
           setDetailModalOpen(false);
+        }}
+        board={selectedBoard}
+      />
+      <DeleteBoardComponent
+        open={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
         }}
         board={selectedBoard}
       />

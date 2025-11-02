@@ -40,7 +40,14 @@ function BoardCardComponent({ board, openModal }: Props) {
               >
                 Info
               </DropdownMenuLabel>
-              <DropdownMenuLabel>Edit Board</DropdownMenuLabel>
+              <DropdownMenuLabel
+                className="cursor-pointer"
+                onClick={() => {
+                  openModal(board, "upsert");
+                }}
+              >
+                Edit Board
+              </DropdownMenuLabel>
               <DropdownMenuLabel
                 className="cursor-pointer"
                 onClick={() => {

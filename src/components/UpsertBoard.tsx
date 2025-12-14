@@ -8,6 +8,7 @@ import type { FormEvent } from "react";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
+import { socket } from "../lib/socket";
 
 interface Props {
   onClose: () => void;
@@ -54,6 +55,7 @@ function UpsertBoardComponent({ onClose, board }: Props) {
         }
 
         toast.success("The board has been successfully created or edited.");
+        socket.emit("board", {});
         onCloseModal();
 
         return response.json();

@@ -6,6 +6,7 @@ import { useForm } from "@tanstack/react-form";
 import { type FormEvent } from "react";
 import { LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
+import { socket } from "../lib/socket";
 
 interface Props {
   onClose: () => void;
@@ -38,6 +39,7 @@ function DeleteBoardComponent({ onClose, board }: Props) {
         }
 
         toast.success("The board has been successfully deleted.");
+        socket.emit("board", {});
         onCloseModal();
 
         return response.json();

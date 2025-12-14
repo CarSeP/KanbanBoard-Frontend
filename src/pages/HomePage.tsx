@@ -1,20 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import LoaderComponent from "../components/Loader";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import BoardGridComponent from "../components/BoardGrid";
 import { toast } from "sonner";
+import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { socket } from "../lib/socket";
-import BoardComponent from "../components/Board";
+import LoaderComponent from "../components/Loader";
 
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/board";
 
-function BoardDetailPage() {
-  const params = useParams();
-  const id = params.id;
-
+function HomePage() {
   const { isPending, error, data, refetch } = useQuery({
-    queryKey: ["getBoard"],
-    queryFn: () => fetch(`${URL}/${id}`).then((res) => res.json()),
+    queryKey: ["getBoards"],
+    queryFn: () => fetch(URL).then((res) => res.json()),
   });
 
   useEffect(() => {
@@ -33,7 +29,7 @@ function BoardDetailPage() {
     return <LoaderComponent />;
   }
 
-  return <BoardComponent board={data.board} />;
+  return <BoardGridComponent boards={data.boards} />;
 }
 
-export default BoardDetailPage;
+export default HomePage;

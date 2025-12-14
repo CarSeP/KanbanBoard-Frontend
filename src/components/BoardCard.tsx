@@ -20,25 +20,36 @@ function BoardCardComponent({ board }: Props) {
   const setModalData = useSetAtom(setModalDataAtom);
 
   return (
-    <div className="w-96 h-46 p-6 flex justify-center">
+    <a
+      href={`/board/${board.id}`}
+      className="w-96 h-46 p-6 flex justify-center"
+    >
       <Card className="w-full max-w-sm cursor-pointer hover:bg-accent">
         <CardHeader className="flex justify-between">
           <CardTitle className="text-2xl break-all">{board.name}</CardTitle>
           <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger
+              asChild
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+              className="cursor-pointer"
+            >
               <Button
                 className="hover:bg-transparent"
                 variant="ghost"
                 aria-label="Open menu"
                 size="icon-sm"
               >
-                <MoreHorizontalIcon />
+                <MoreHorizontalIcon size="16" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40" align="start">
               <DropdownMenuLabel
                 className="cursor-pointer"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setModal("detail");
                   setModalData(board);
                 }}
@@ -47,7 +58,8 @@ function BoardCardComponent({ board }: Props) {
               </DropdownMenuLabel>
               <DropdownMenuLabel
                 className="cursor-pointer"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setModal("upsert");
                   setModalData(board);
                 }}
@@ -56,7 +68,8 @@ function BoardCardComponent({ board }: Props) {
               </DropdownMenuLabel>
               <DropdownMenuLabel
                 className="cursor-pointer"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setModal("delete");
                   setModalData(board);
                 }}
@@ -67,7 +80,7 @@ function BoardCardComponent({ board }: Props) {
           </DropdownMenu>
         </CardHeader>
       </Card>
-    </div>
+    </a>
   );
 }
 

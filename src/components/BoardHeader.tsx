@@ -7,7 +7,7 @@ interface Props {
 function BoardHeaderComponent({ title }: Props) {
   return (
     <header className="flex justify-between p-4 border-b border-border">
-      <h1 className="flex">
+      <h1 className="flex gap-2">
         <Trello />
         {title}
       </h1>

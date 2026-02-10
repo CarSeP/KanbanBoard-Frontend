@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import type { Board } from "../interfaces/board.interface";
 import BoardHeaderComponent from "./BoardHeader";
 import ColunmComponent from "./Column";
@@ -9,9 +8,9 @@ interface Props {
 
 function BoardComponent({ board }: Props) {
   return (
-    <section>
+    <section className="bg-background">
       <BoardHeaderComponent title={board.name} />
-      <div className="flex gap-4 p-4">
+      <div className="mt-6 px-4 flex gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-4 lg:overflow-visible">
         {board.columns &&
           board.columns.map((column) => (
             <ColunmComponent column={column} key={column.id} />

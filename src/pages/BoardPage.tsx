@@ -20,7 +20,7 @@ function BoardDetailPage() {
   useEffect(() => {
     if (error || (data && !data.success)) {
       toast.error(
-        "An error occurred while trying to retrieve data from the server."
+        "An error occurred while trying to retrieve data from the server.",
       );
     }
   }, [error, data]);
@@ -33,7 +33,11 @@ function BoardDetailPage() {
     return <LoaderComponent />;
   }
 
-  return <BoardComponent board={data.board} />;
+  return (
+    <main>
+      <BoardComponent board={data.board} />
+    </main>
+  );
 }
 
 export default BoardDetailPage;

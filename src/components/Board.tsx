@@ -1,4 +1,5 @@
 import type { Board } from "../interfaces/board.interface";
+import AddColumnComponent from "./AddColumn";
 import BoardHeaderComponent from "./BoardHeader";
 import ColunmComponent from "./Column";
 
@@ -15,6 +16,10 @@ function BoardComponent({ board }: Props) {
           board.columns.map((column) => (
             <ColunmComponent column={column} key={column.id} />
           ))}
+        <AddColumnComponent
+          order={board.columns?.length ?? 0}
+          boardId={board.id}
+        />
       </div>
     </section>
   );

@@ -1,7 +1,8 @@
-import { MoreHorizontal, Plus } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import type { Column } from "../interfaces/column.interface";
 import CardComponent from "./Card";
 import { Button } from "./ui/button";
+import AddCardComponent from "./AddCard";
 
 interface Props {
   column: Column;
@@ -21,14 +22,10 @@ function ColunmComponent({ column }: Props) {
           </span>
         </div>
         <div className="flex items-center gap-0.5">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 text-muted-foreground hover:text-foreground"
-          >
-            <Plus className="h-4 w-4" />
-            <span className="sr-only">Add task</span>
-          </Button>
+          <AddCardComponent
+            order={column.cards?.length ?? 0}
+            columnId={column.id}
+          />
           <Button
             variant="ghost"
             size="icon"

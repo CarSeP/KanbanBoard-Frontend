@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 import { socket } from "../lib/socket";
 import BoardComponent from "../components/Board";
+import BoardHeaderComponent from "../components/BoardHeader";
 
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/board";
 
@@ -34,9 +35,12 @@ function BoardDetailPage() {
   }
 
   return (
-    <main>
-      <BoardComponent board={data.board} />
-    </main>
+    <div className="bg-background">
+      <BoardHeaderComponent title={data.board.name} />
+      <main>
+        <BoardComponent board={data.board} />
+      </main>
+    </div>
   );
 }
 

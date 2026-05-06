@@ -25,3 +25,7 @@ dist-ssr
 
 # env
 .env
+
+# ai
+.agents
+skills-lock.json

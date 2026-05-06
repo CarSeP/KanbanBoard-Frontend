@@ -29,7 +29,7 @@ function HomePage() {
     return <LoaderComponent />;
   }
 
-  return <BoardGridComponent boards={data.boards} />;
+  return <BoardGridComponent boards={data?.boards} />;
 }
 
 export default HomePage;

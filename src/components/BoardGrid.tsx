@@ -4,7 +4,7 @@ import AddBoardCardComponent from "./AddBoardCard";
 import ModalBoardComponent from "./ModalBoard";
 
 interface Props {
-  boards: Board[];
+  boards: Board[] | undefined;
 }
 
 function BoardGridComponent({ boards }: Props) {

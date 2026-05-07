@@ -5,11 +5,15 @@ import { useAtom } from "jotai";
 import UpsertColumnComponent from "./UpsertColumn";
 import deleteColumnComponent from "./DeleteColumn";
 import UpsertCardComponent from "./UpsertCard";
+import DeleteCardComponent from "./DeleteCard";
+import DetailCardComponent from "./DetailCard";
 
 const modalComponents = {
   upsertColumn: UpsertColumnComponent,
   deleteColumn: deleteColumnComponent,
   upsertCard: UpsertCardComponent,
+  detailCard: DetailCardComponent,
+  deleteCard: DeleteCardComponent,
   none: null,
 };
 

@@ -11,6 +11,7 @@ import { Button } from "./ui/button";
 import AddCardComponent from "./AddCard";
 import { useSetAtom } from "jotai";
 import { setActionAtom, setActionDataAtom } from "../atoms/boardAction";
+import type { Card } from "../interfaces/card.interface";
 
 interface Props {
   column: Column;
@@ -19,6 +20,11 @@ interface Props {
 function ColunmComponent({ column }: Props) {
   const setAction = useSetAtom(setActionAtom);
   const setActionData = useSetAtom(setActionDataAtom);
+
+  const showCard = (card: Card) => {
+    setAction("detailCard");
+    setActionData({card});
+  };
 
   return (
     <article className="flex w-[320px] shrink-0 flex-col rounded-xl">
@@ -61,7 +67,7 @@ function ColunmComponent({ column }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setAction("upsertColumn");
-                  setActionData(column);
+                  setActionData({column});
                 }}
               >
                 Edit Column
@@ -71,7 +77,7 @@ function ColunmComponent({ column }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setAction("deleteColumn");
-                  setActionData(column);
+                  setActionData({column});
                 }}
               >
                 Delete Column
@@ -83,7 +89,13 @@ function ColunmComponent({ column }: Props) {
       <div className="flex flex-col gap-2.5 rounded-xl bg-muted/50 p-2.5 min-h-[200px]">
         {column.cards &&
           column.cards.map((card) => (
-            <CardComponent card={card} key={card.id} />
+            <button
+              className="cursor-pointer"
+              key={card.id}
+              onClick={() => showCard(card)}
+            >
+              <CardComponent card={card} />
+            </button>
           ))}
       </div>
     </article>

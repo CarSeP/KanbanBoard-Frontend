@@ -10,6 +10,8 @@ import { Textarea } from "./ui/textarea";
 import type { FormEvent } from "react";
 import { Button } from "./ui/button";
 import { LoaderCircle } from "lucide-react";
+import { useSetAtom } from "jotai";
+import { setActionAtom, setActionDataAtom } from "../atoms/boardAction";
 
 interface Props {
   onClose: () => void;
@@ -27,6 +29,9 @@ interface mutationProps {
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/card";
 
 function UpsertCardComponent({ onClose, value }: Props) {
+  const setAction = useSetAtom(setActionAtom);
+  const setActionData = useSetAtom(setActionDataAtom);
+
   const form = useForm({
     defaultValues: {
       id: 0,
@@ -61,7 +66,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
 
         toast.success("The card has been successfully created or edited.");
         socket.emit("board", {});
-        onCloseModal();
+        openCardModal();
 
         return response.json();
       } catch {
@@ -75,6 +80,18 @@ function UpsertCardComponent({ onClose, value }: Props) {
     form.handleSubmit();
   };
 
+  const openCardModal = () => {
+    form.reset();
+
+    if (value?.card) {
+      onClose();
+      return;
+    }
+
+    setAction("detailCard");
+    setActionData({ card: value?.card });
+  };
+
   const onCloseModal = () => {
     form.reset();
     onClose();
@@ -82,9 +99,9 @@ function UpsertCardComponent({ onClose, value }: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <DialogHeader>
+      <DialogHeader className="pt-4">
         <DialogTitle className="flex gap-1 items-center">
-          Create Card
+          {value?.card ? "Update Card" : "Create Card"}
         </DialogTitle>
       </DialogHeader>
       <form.Field
@@ -109,6 +126,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
         )}
       />
       <form.Field
+        defaultValue={value?.card?.title}
         name="title"
         validators={{
           onChange: ({ value }) =>
@@ -140,11 +158,12 @@ function UpsertCardComponent({ onClose, value }: Props) {
         )}
       />
       <form.Field
+        defaultValue={value?.card?.content}
         name="content"
         children={(field) => (
           <div className="py-4">
             <Label htmlFor={field.name} className="font-normal">
-              Content
+              Description
             </Label>
             <Textarea
               id={field.name}
@@ -152,8 +171,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
               value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
-              rows={10}
-              className="resize-none"
+              className="resize-none h-60"
             ></Textarea>
             {field.state.meta.errors ? (
               <p className="text-red-500 text-sm mt-1">
@@ -163,7 +181,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
           </div>
         )}
       />
-      <DialogFooter>
+      <DialogFooter className="pt-10">
         <Button
           className="cursor-pointer"
           variant="outline"
@@ -173,7 +191,8 @@ function UpsertCardComponent({ onClose, value }: Props) {
           Cancel
         </Button>
         <Button className="cursor-pointer" type="submit" disabled={isPending}>
-          Create {isPending && <LoaderCircle className="animate-spin" />}
+          {value?.card ? "Update " : "Create "}
+          {isPending && <LoaderCircle className="animate-spin" />}
         </Button>
       </DialogFooter>
     </form>

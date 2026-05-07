@@ -6,6 +6,8 @@ type Action =
   | "upsertColumn"
   | "deleteColumn"
   | "upsertCard"
+  | "deleteCard"
+  | "detailCard"
   | "none";
 
 export const actionAtom = atom<Action>("none");

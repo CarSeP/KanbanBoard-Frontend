@@ -15,6 +15,11 @@ interface Props {
   board: Board | undefined;
 }
 
+interface mutationProps {
+  id?: string;
+  name: string;
+}
+
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/board";
 
 function UpsertBoardComponent({ onClose, board }: Props) {
@@ -24,7 +29,7 @@ function UpsertBoardComponent({ onClose, board }: Props) {
       name: "",
     },
     onSubmit: async ({ value }) => {
-      mutate([value.id, value.name]);
+      mutate(value);
     },
   });
 
@@ -34,12 +39,10 @@ function UpsertBoardComponent({ onClose, board }: Props) {
   };
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async ([id, name]: [string, string]) => {
+    mutationFn: async (payload: mutationProps) => {
       try {
-        const payload: any = { name };
-
-        if (id && id.trim() !== "") {
-          payload.id = id;
+        if (!payload.id) {
+          delete payload.id;
         }
 
         const response = await fetch(URL, {
@@ -59,7 +62,7 @@ function UpsertBoardComponent({ onClose, board }: Props) {
         onCloseModal();
 
         return response.json();
-      } catch (error) {
+      } catch {
         toast.error("An error occurred while creating or editing the board.");
       }
     },
@@ -90,8 +93,8 @@ function UpsertBoardComponent({ onClose, board }: Props) {
             !value
               ? "Name is required"
               : value.length > 30
-              ? "The board must have a maximum of 30 characters"
-              : undefined,
+                ? "The board must have a maximum of 30 characters"
+                : undefined,
           onChangeAsyncDebounceMs: 500,
         }}
         children={(field) => (

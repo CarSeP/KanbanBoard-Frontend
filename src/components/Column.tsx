@@ -61,7 +61,7 @@ function ColunmComponent({ column }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setAction("upsertColumn");
-                  setActionData({ columns: column });
+                  setActionData(column);
                 }}
               >
                 Edit Column
@@ -71,7 +71,7 @@ function ColunmComponent({ column }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setAction("deleteColumn");
-                  setActionData({ columns: column });
+                  setActionData(column);
                 }}
               >
                 Delete Column

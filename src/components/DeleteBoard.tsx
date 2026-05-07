@@ -43,7 +43,7 @@ function DeleteBoardComponent({ onClose, board }: Props) {
         onCloseModal();
 
         return response.json();
-      } catch (error) {
+      } catch {
         toast.error("An error occurred while deleting the board.");
       }
     },

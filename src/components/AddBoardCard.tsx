@@ -7,7 +7,7 @@ function AddBoardCardComponent() {
   const setModalData = useSetAtom(setModalDataAtom);
 
   return (
-    <div
+    <button
       className="w-96 h-46 p-6 flex justify-center"
       onClick={() => {
         setModal("upsert");
@@ -19,7 +19,7 @@ function AddBoardCardComponent() {
           Create Board
         </CardTitle>
       </Card>
-    </div>
+    </button>
   );
 }
 

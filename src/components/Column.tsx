@@ -10,7 +10,7 @@ interface Props {
 
 function ColunmComponent({ column }: Props) {
   return (
-    <article className="flex w-[320px] shrink-0 flex-col rounded-xl lg:w-auto lg:min-w-0 lg:flex-1">
+    <article className="flex w-[320px] shrink-0 flex-col rounded-xl">
       <div className="mb-3 flex items-center justify-between px-1">
         <div className="flex items-center gap-2.5">
           <span className="h-2 w-2 rounded-full bg-ring" />

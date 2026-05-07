@@ -7,7 +7,7 @@ interface Props {
 function CardComponent({ card }: Props) {
   return (
     <article className="group rounded-lg border border-border bg-card p-3.5 shadow-sm transition-shadow hover:shadow-md">
-      <h4 className="text-sm font-medium text-card-foreground leading-snug">
+      <h4 className="text-sm font-medium text-card-foreground leading-snug line-clamp-2 wrap-break-word">
         {card.title}
       </h4>
       {card.content && (

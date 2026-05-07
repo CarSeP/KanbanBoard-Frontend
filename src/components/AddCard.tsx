@@ -84,7 +84,7 @@ function AddCardComponent({ order, columnId }: Props) {
       <Button
         variant="ghost"
         size="icon"
-        className="h-7 w-7 text-muted-foreground hover:text-foreground"
+        className="h-7 w-7 text-muted-foreground hover:text-foreground cursor-pointer"
         onClick={() => setOpen(true)}
       >
         <Plus className="h-4 w-4" />

@@ -26,7 +26,7 @@ function BoardCardComponent({ board }: Props) {
     >
       <Card className="w-full max-w-sm cursor-pointer hover:bg-accent">
         <CardHeader className="flex justify-between">
-          <CardTitle className="text-2xl break-all">{board.name}</CardTitle>
+          <CardTitle title={board.name} className="text-2xl break-all line-clamp-3">{board.name}</CardTitle>
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger
               asChild

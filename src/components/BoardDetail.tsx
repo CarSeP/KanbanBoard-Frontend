@@ -1,6 +1,11 @@
 import { SquareKanban } from "lucide-react";
 import type { Board } from "../interfaces/board.interface";
-import { DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import { Button } from "./ui/button";
 
 interface Props {
@@ -11,11 +16,12 @@ interface Props {
 function BoardDetailComponent({ onClose, board }: Props) {
   return (
     <>
-      <DialogHeader>
+      <DialogHeader className="pt-4">
         <DialogTitle className="flex gap-1 items-center">
           <SquareKanban />
           Board Information
         </DialogTitle>
+        <DialogDescription />
       </DialogHeader>
       {board && (
         <div>
@@ -37,7 +43,7 @@ function BoardDetailComponent({ onClose, board }: Props) {
           </div>
         </div>
       )}
-      <DialogFooter>
+      <DialogFooter className="pt-10">
         <Button className="cursor-pointer" variant="outline" onClick={onClose}>
           Close
         </Button>

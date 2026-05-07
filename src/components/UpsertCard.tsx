@@ -1,5 +1,5 @@
 import type { ActionValue } from "../interfaces/action.interface";
-import { DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
@@ -103,6 +103,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
         <DialogTitle className="flex gap-1 items-center">
           {value?.card ? "Update Card" : "Create Card"}
         </DialogTitle>
+        <DialogDescription />
       </DialogHeader>
       <form.Field
         defaultValue={value?.card?.id}
@@ -171,7 +172,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
               value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
-              className="resize-none h-60"
+              className="resize-none h-40"
             ></Textarea>
             {field.state.meta.errors ? (
               <p className="text-red-500 text-sm mt-1">

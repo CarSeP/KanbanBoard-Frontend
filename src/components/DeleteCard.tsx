@@ -1,4 +1,4 @@
-import { DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
@@ -68,10 +68,11 @@ function DeleteCardComponent({ onClose, value }: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <DialogHeader>
+      <DialogHeader className="pt-4">
         <DialogTitle>Are you sure you want to delete this card?</DialogTitle>
+        <DialogDescription />
       </DialogHeader>
-      <DialogFooter>
+      <DialogFooter className="pt-10">
         <Button
           className="cursor-pointer"
           variant="outline"

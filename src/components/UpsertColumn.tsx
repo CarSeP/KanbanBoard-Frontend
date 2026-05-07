@@ -1,4 +1,4 @@
-import { DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { LoaderCircle } from "lucide-react";
 import { Input } from "./ui/input";
 import { Label } from "@radix-ui/react-label";
@@ -79,10 +79,11 @@ function UpsertColumnComponent({ onClose, value }: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <DialogHeader>
+      <DialogHeader className="pt-4">
         <DialogTitle className="flex gap-1 items-center">
           {value?.column ? "Update Column" : "Create Column"}
         </DialogTitle>
+        <DialogDescription />
       </DialogHeader>
       <form.Field
         defaultValue={value?.column?.id}
@@ -137,7 +138,7 @@ function UpsertColumnComponent({ onClose, value }: Props) {
           </div>
         )}
       />
-      <DialogFooter>
+      <DialogFooter className="pt-10">
         <Button
           className="cursor-pointer"
           variant="outline"
@@ -147,7 +148,7 @@ function UpsertColumnComponent({ onClose, value }: Props) {
           Cancel
         </Button>
         <Button className="cursor-pointer" type="submit" disabled={isPending}>
-          {value?.column ? "Update" : "Create"}{" "}
+          {value?.column ? "Update " : "Create "}
           {isPending && <LoaderCircle className="animate-spin" />}
         </Button>
       </DialogFooter>

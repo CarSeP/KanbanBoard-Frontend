@@ -1,4 +1,4 @@
-import { DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
 import type { ActionValue } from "../interfaces/action.interface";
 import { CalendarDays, Clock, Trash2, Pencil } from "lucide-react";
@@ -18,10 +18,11 @@ function DetailCardComponent({ onClose, value }: Props) {
 
   return (
     <>
-      <DialogHeader className="relative">
+      <DialogHeader className="pt-4 relative">
         <DialogTitle className="pr-10 text-xl font-semibold tracking-tight leading-tight">
           {card?.title || "Untitled Card"}
         </DialogTitle>
+        <DialogDescription />
       </DialogHeader>
       <div className="space-y-6 py-6 max-h-[50vh] overflow-y-auto pr-2">
         {card?.content && (
@@ -49,14 +50,14 @@ function DetailCardComponent({ onClose, value }: Props) {
           </div>
         </div>
       </div>
-      <DialogFooter className="gap-2 sm:justify-end">
+      <DialogFooter className="pt-10 gap-2 sm:justify-end">
         <Button
           variant="destructive"
+          className="gap-2 cursor-pointer"
           onClick={() => {
             setAction("deleteCard");
             setActionData({ card });
           }}
-          className="gap-2 cursor-pointer"
         >
           <Trash2 className="h-4 w-4" />
           Delete

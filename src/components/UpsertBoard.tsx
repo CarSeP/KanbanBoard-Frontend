@@ -1,5 +1,10 @@
 import type { Board } from "../interfaces/board.interface";
-import { DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import { Button } from "./ui/button";
 import { LoaderCircle } from "lucide-react";
 import { useForm } from "@tanstack/react-form";
@@ -75,8 +80,9 @@ function UpsertBoardComponent({ onClose, board }: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <DialogHeader>
+      <DialogHeader className="pt-4">
         <DialogTitle>{board ? "Update Board" : "Create Board"}</DialogTitle>
+        <DialogDescription />
       </DialogHeader>
       <form.Field
         defaultValue={board?.id}
@@ -115,7 +121,7 @@ function UpsertBoardComponent({ onClose, board }: Props) {
           </div>
         )}
       />
-      <DialogFooter>
+      <DialogFooter className="pt-10">
         <Button
           className="cursor-pointer"
           variant="outline"
@@ -125,7 +131,7 @@ function UpsertBoardComponent({ onClose, board }: Props) {
           Cancel
         </Button>
         <Button className="cursor-pointer" type="submit" disabled={isPending}>
-          {board ? "Update" : "Create"}{" "}
+          {board ? "Update " : "Create "}
           {isPending && <LoaderCircle className="animate-spin" />}
         </Button>
       </DialogFooter>

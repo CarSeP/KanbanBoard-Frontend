@@ -1,14 +1,25 @@
 import { MoreHorizontal } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import type { Column } from "../interfaces/column.interface";
 import CardComponent from "./Card";
 import { Button } from "./ui/button";
 import AddCardComponent from "./AddCard";
+import { useSetAtom } from "jotai";
+import { setActionAtom, setActionDataAtom } from "../atoms/boardAction";
 
 interface Props {
   column: Column;
 }
 
 function ColunmComponent({ column }: Props) {
+  const setAction = useSetAtom(setActionAtom);
+  const setActionData = useSetAtom(setActionDataAtom);
+
   return (
     <article className="flex w-[320px] shrink-0 flex-col rounded-xl">
       <div className="mb-3 flex items-center justify-between px-1">
@@ -26,14 +37,47 @@ function ColunmComponent({ column }: Props) {
             order={column.cards?.length ?? 0}
             columnId={column.id}
           />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 text-muted-foreground hover:text-foreground"
-          >
-            <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">Column options</span>
-          </Button>
+          <DropdownMenu modal={false}>
+            <DropdownMenuTrigger
+              asChild
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+              className="cursor-pointer"
+            >
+              <Button
+                className="h-7 w-7 text-muted-foreground hover:text-foreground"
+                variant="ghost"
+                aria-label="Open menu"
+                size="icon"
+              >
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-40" align="start">
+              <DropdownMenuLabel
+                className="cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setAction("upsertColumn");
+                  setActionData({ columns: column });
+                }}
+              >
+                Edit Column
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                className="cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setAction("deleteColumn");
+                  setActionData({ columns: column });
+                }}
+              >
+                Delete Column
+              </DropdownMenuLabel>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
       <div className="flex flex-col gap-2.5 rounded-xl bg-muted/50 p-2.5 min-h-[200px]">

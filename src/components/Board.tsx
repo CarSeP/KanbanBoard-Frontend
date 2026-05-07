@@ -1,6 +1,7 @@
 import type { Board } from "../interfaces/board.interface";
 import AddColumnComponent from "./AddColumn";
 import ColunmComponent from "./Column";
+import ModalActionComponent from "./ModalAction";
 
 interface Props {
   board: Board;
@@ -21,6 +22,7 @@ function BoardComponent({ board }: Props) {
             <ColunmComponent column={column} key={column.id} />
           ))}
       </div>
+      <ModalActionComponent />
     </section>
   );
 }

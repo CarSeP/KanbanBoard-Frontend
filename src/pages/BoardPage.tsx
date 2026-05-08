@@ -35,9 +35,9 @@ function BoardDetailPage() {
   }
 
   return (
-    <div className="bg-background">
+    <div className="bg-background h-full flex flex-col">
       <BoardHeaderComponent title={data.board.name} />
-      <main>
+      <main className="flex-1 overflow-y-scroll pb-4 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
         <BoardComponent board={data.board} />
       </main>
     </div>

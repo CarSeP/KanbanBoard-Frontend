@@ -1,5 +1,10 @@
 import type { ActionValue } from "../interfaces/action.interface";
-import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
@@ -66,9 +71,17 @@ function UpsertCardComponent({ onClose, value }: Props) {
 
         toast.success("The card has been successfully created or edited.");
         socket.emit("board", {});
-        openCardModal();
 
-        return response.json();
+        const data = await response.json();
+        if (data.success && data.card) {
+          setActionData({ card: data.card });
+          onOpenModal();
+          return true;
+        }
+
+        onCloseModal();
+
+        return true;
       } catch {
         toast.error("An error occurred while creating or editing the card.");
       }
@@ -80,20 +93,17 @@ function UpsertCardComponent({ onClose, value }: Props) {
     form.handleSubmit();
   };
 
-  const openCardModal = () => {
-    form.reset();
-
-    if (value?.card) {
-      onClose();
-      return;
-    }
-
-    setAction("detailCard");
-    setActionData({ card: value?.card });
-  };
-
   const onCloseModal = () => {
     form.reset();
+    onClose();
+  };
+
+  const onOpenModal = () => {
+    if (value?.card) {
+      form.reset();
+      setAction("detailCard");
+    }
+
     onClose();
   };
 
@@ -186,7 +196,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
         <Button
           className="cursor-pointer"
           variant="outline"
-          onClick={onCloseModal}
+          onClick={onOpenModal}
           type="button"
         >
           Cancel

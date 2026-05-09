@@ -12,6 +12,9 @@ import AddCardComponent from "./AddCard";
 import { useSetAtom } from "jotai";
 import { setActionAtom, setActionDataAtom } from "../atoms/boardAction";
 import type { Card } from "../interfaces/card.interface";
+import { useEffect, useRef } from "react";
+import { moveCard } from "../lib/sortable";
+import Sortable from "sortablejs";
 
 interface Props {
   column: Column;
@@ -20,6 +23,13 @@ interface Props {
 function ColunmComponent({ column }: Props) {
   const setAction = useSetAtom(setActionAtom);
   const setActionData = useSetAtom(setActionDataAtom);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    new Sortable(ref.current, moveCard);
+  }, []);
 
   const showCard = (card: Card) => {
     setAction("detailCard");
@@ -89,12 +99,16 @@ function ColunmComponent({ column }: Props) {
           </DropdownMenu>
         </div>
       </div>
-      <div className="flex flex-col gap-2.5 rounded-xl bg-muted/50 p-2.5 min-h-[200px]">
+      <div
+        ref={ref}
+        className="flex flex-col gap-2.5 rounded-xl bg-muted/50 p-2.5 min-h-[200px]"
+      >
         {column.cards &&
           column.cards.map((card) => (
             <button
               className="cursor-pointer"
               key={card.id}
+              id={`${card.id}`}
               onClick={() => showCard(card)}
             >
               <CardComponent card={card} />

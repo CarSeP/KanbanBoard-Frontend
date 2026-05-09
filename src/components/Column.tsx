@@ -23,11 +23,14 @@ function ColunmComponent({ column }: Props) {
 
   const showCard = (card: Card) => {
     setAction("detailCard");
-    setActionData({card});
+    setActionData({ card });
   };
 
   return (
-    <article className="flex w-[320px] shrink-0 flex-col rounded-xl">
+    <article
+      id={`${column.id}`}
+      className="flex w-[320px] shrink-0 flex-col rounded-xl"
+    >
       <div className="mb-3 flex items-center justify-between px-1">
         <div className="flex items-center gap-2.5">
           <span className="h-2 w-2 rounded-full bg-ring" />
@@ -67,7 +70,7 @@ function ColunmComponent({ column }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setAction("upsertColumn");
-                  setActionData({column});
+                  setActionData({ column });
                 }}
               >
                 Edit Column
@@ -77,7 +80,7 @@ function ColunmComponent({ column }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setAction("deleteColumn");
-                  setActionData({column});
+                  setActionData({ column });
                 }}
               >
                 Delete Column

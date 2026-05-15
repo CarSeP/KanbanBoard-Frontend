@@ -1,5 +1,10 @@
 import type { Board } from "../interfaces/board.interface";
-import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
@@ -32,6 +37,7 @@ function DeleteBoardComponent({ onClose, board }: Props) {
       try {
         const response = await fetch(URL + board?.id, {
           method: "DELETE",
+          credentials: "include",
         });
 
         if (!response.ok) {

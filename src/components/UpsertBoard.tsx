@@ -51,6 +51,7 @@ function UpsertBoardComponent({ onClose, board }: Props) {
         }
 
         const response = await fetch(URL, {
+          credentials: "include",
           method: "PUT",
           body: JSON.stringify(payload),
           headers: {

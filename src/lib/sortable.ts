@@ -15,6 +15,7 @@ export const moveColumn = {
 
       const response = await fetch(`${URL}/column/${id}/${newIndex}`, {
         method: "POST",
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -38,12 +39,11 @@ export const moveCard = {
       const newIndex = evt.newIndex;
       const toColumnId = evt.to.closest("article")?.id;
 
-      console.log({ id, evt });
-
       const response = await fetch(
         `${URL}/card/${id}/${toColumnId}/${newIndex}`,
         {
           method: "POST",
+          credentials: "include",
         },
       );
 

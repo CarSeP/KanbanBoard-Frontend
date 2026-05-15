@@ -43,6 +43,7 @@ function DeleteCardComponent({ onClose, value }: Props) {
       try {
         const response = await fetch(`${URL}/${value?.card?.id}`, {
           method: "DELETE",
+          credentials: "include",
         });
 
         if (!response.ok) {

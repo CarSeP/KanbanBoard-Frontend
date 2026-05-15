@@ -15,7 +15,10 @@ function BoardDetailPage() {
 
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["getBoard"],
-    queryFn: () => fetch(`${URL}/${id}`).then((res) => res.json()),
+    queryFn: () =>
+      fetch(`${URL}/${id}`, { credentials: "include" }).then((res) =>
+        res.json(),
+      ),
   });
 
   useEffect(() => {

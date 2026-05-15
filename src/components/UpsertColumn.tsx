@@ -1,4 +1,9 @@
-import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import { LoaderCircle } from "lucide-react";
 import { Input } from "./ui/input";
 import { Label } from "@radix-ui/react-label";
@@ -52,6 +57,7 @@ function UpsertColumnComponent({ onClose, value }: Props) {
         const response = await fetch(URL, {
           method: "PUT",
           body: JSON.stringify(payload),
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },

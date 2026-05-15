@@ -59,6 +59,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
 
         const response = await fetch(URL, {
           method: "PUT",
+          credentials: "include",
           body: JSON.stringify(payload),
           headers: {
             "Content-Type": "application/json",

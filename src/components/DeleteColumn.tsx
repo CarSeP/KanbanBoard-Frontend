@@ -32,6 +32,7 @@ function deleteColumnComponent({ onClose, value }: Props) {
       try {
         const response = await fetch(`${URL}/${value?.column?.id}`, {
           method: "DELETE",
+          credentials: "include",
         });
 
         if (!response.ok) {

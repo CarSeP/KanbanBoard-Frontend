@@ -69,7 +69,7 @@ function AuthPage() {
           </Button>
           <Button
             variant="secondary"
-            className="flex gap-2 w-full"
+            className="flex gap-2 w-full cursor-pointer"
             disabled={isPending}
             onClick={() => mutate()}
           >

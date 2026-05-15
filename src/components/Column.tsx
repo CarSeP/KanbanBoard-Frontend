@@ -20,7 +20,7 @@ interface Props {
   column: Column;
 }
 
-function ColunmComponent({ column }: Props) {
+function ColumnComponent({ column }: Props) {
   const setAction = useSetAtom(setActionAtom);
   const setActionData = useSetAtom(setActionDataAtom);
   const ref = useRef<HTMLDivElement>(null);
@@ -119,4 +119,4 @@ function ColunmComponent({ column }: Props) {
   );
 }
 
-export default ColunmComponent;
+export default ColumnComponent;

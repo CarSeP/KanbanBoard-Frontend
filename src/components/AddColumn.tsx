@@ -21,7 +21,7 @@ function AddColumnComponent({ order, boardId }: Props) {
           setActionData({ order, parentId: boardId });
         }}
       >
-        Add new colunm
+        Add new column
       </Button>
     </div>
   );

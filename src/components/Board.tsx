@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { Board } from "../interfaces/board.interface";
 import AddColumnComponent from "./AddColumn";
-import ColunmComponent from "./Column";
+import ColumnComponent from "./Column";
 import ModalActionComponent from "./ModalAction";
 import Sortable from "sortablejs";
 import { moveColumn } from "../lib/sortable";
@@ -33,7 +33,7 @@ function BoardComponent({ board }: Props) {
       >
         {board.columns &&
           board.columns.map((column) => (
-            <ColunmComponent column={column} key={column.id} />
+            <ColumnComponent column={column} key={column.id} />
           ))}
       </div>
       <ModalActionComponent />

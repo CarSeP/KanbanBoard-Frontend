@@ -1,4 +1,5 @@
 import type { Card } from "../interfaces/card.interface";
+import { deserialize, toPlainText } from "../lib/slate-utils";
 
 interface Props {
   card: Card;
@@ -12,7 +13,7 @@ function CardComponent({ card }: Props) {
       </h4>
       {card.content && (
         <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed line-clamp-2">
-          {card.content}
+          {toPlainText(deserialize(card.content))}
         </p>
       )}
     </article>

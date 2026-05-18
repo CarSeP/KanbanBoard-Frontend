@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { socket } from "../lib/socket";
 import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
+import RichTextEditor from "./RichTextEditor";
 import type { FormEvent } from "react";
 import { Button } from "./ui/button";
 import { LoaderCircle } from "lucide-react";
@@ -109,7 +109,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="w-full overflow-hidden">
       <DialogHeader className="pt-4">
         <DialogTitle className="flex gap-1 items-center">
           {value?.card ? "Update Card" : "Create Card"}
@@ -177,14 +177,15 @@ function UpsertCardComponent({ onClose, value }: Props) {
             <Label htmlFor={field.name} className="font-normal">
               Description
             </Label>
-            <Textarea
+            <RichTextEditor
               id={field.name}
               name={field.name}
               value={field.state.value}
               onBlur={field.handleBlur}
-              onChange={(e) => field.handleChange(e.target.value)}
-              className="resize-none h-40"
-            ></Textarea>
+              onChange={(val) => field.handleChange(val)}
+              resetKey={String(value?.card?.id ?? "new")}
+              initialContent={value?.card?.content}
+            />
             {field.state.meta.errors ? (
               <p className="text-red-500 text-sm mt-1">
                 {field.state.meta.errors.join(", ")}

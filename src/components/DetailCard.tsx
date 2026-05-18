@@ -5,6 +5,7 @@ import { CalendarDays, Clock, Trash2, Pencil } from "lucide-react";
 import { formatDate, formatTime } from "../lib/time";
 import { useSetAtom } from "jotai";
 import { setActionAtom, setActionDataAtom } from "../atoms/boardAction";
+import RichTextEditor from "./RichTextEditor";
 
 interface Props {
   onClose: () => void;
@@ -30,9 +31,12 @@ function DetailCardComponent({ onClose, value }: Props) {
             <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
               Description
             </h3>
-            <div className="rounded-lg py-4 text-sm leading-relaxed whitespace-pre-wrap">
-              {card.content}
-            </div>
+            <RichTextEditor
+              value={card.content}
+              onChange={() => {}}
+              onBlur={() => {}}
+              readOnly
+            />
           </div>
         )}
         <div className="flex flex-col gap-4 pt-2">

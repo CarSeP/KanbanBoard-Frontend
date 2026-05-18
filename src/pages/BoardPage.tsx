@@ -29,9 +29,21 @@ function BoardDetailPage() {
     }
   }, [error, data]);
 
-  socket.on("board", () => {
-    refetch();
-  });
+  useEffect(() => {
+    const handleBoard = (data: { boardId?: string }) => {
+      if (!data.boardId || data.boardId === id) {
+        refetch();
+      }
+    };
+
+    socket.on("board", handleBoard);
+    socket.emit("joinBoard", id);
+
+    return () => {
+      socket.off("board", handleBoard);
+      socket.emit("leaveBoard", id);
+    };
+  }, [id, refetch]);
 
   if (isPending) {
     return <LoaderComponent />;

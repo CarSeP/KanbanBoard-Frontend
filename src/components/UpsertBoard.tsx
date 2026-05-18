@@ -64,7 +64,7 @@ function UpsertBoardComponent({ onClose, board }: Props) {
         }
 
         toast.success("The board has been successfully created or edited.");
-        socket.emit("board", {});
+        socket.emit("board", { boardId: board?.id });
         onCloseModal();
 
         return response.json();

@@ -6,4 +6,5 @@ export interface ActionValue {
   card?: Card;
   parentId?: string | number;
   order?: number;
+  boardId?: string;
 }

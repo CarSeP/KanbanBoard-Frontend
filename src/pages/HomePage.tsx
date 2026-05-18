@@ -25,9 +25,17 @@ function HomePage() {
     }
   }, [error, data]);
 
-  socket.on("board", () => {
-    refetch();
-  });
+  useEffect(() => {
+    const handleBoard = () => {
+      refetch();
+    };
+
+    socket.on("board", handleBoard);
+
+    return () => {
+      socket.off("board", handleBoard);
+    };
+  }, [refetch]);
 
   if (isPending) {
     return <LoaderComponent />;

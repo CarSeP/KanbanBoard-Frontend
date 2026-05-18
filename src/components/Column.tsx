@@ -33,7 +33,7 @@ function ColumnComponent({ column }: Props) {
 
   const showCard = (card: Card) => {
     setAction("detailCard");
-    setActionData({ card });
+    setActionData({ card, boardId: column.boardId });
   };
 
   return (
@@ -55,6 +55,7 @@ function ColumnComponent({ column }: Props) {
           <AddCardComponent
             order={column.cards?.length ?? 0}
             columnId={column.id}
+            boardId={column.boardId}
           />
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger
@@ -80,7 +81,7 @@ function ColumnComponent({ column }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setAction("upsertColumn");
-                  setActionData({ column });
+                  setActionData({ column, boardId: column.boardId });
                 }}
               >
                 Edit Column
@@ -90,7 +91,7 @@ function ColumnComponent({ column }: Props) {
                 onClick={(e) => {
                   e.stopPropagation();
                   setAction("deleteColumn");
-                  setActionData({ column });
+                  setActionData({ column, boardId: column.boardId });
                 }}
               >
                 Delete Column

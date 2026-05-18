@@ -68,7 +68,7 @@ function UpsertColumnComponent({ onClose, value }: Props) {
         }
 
         toast.success("The column has been successfully created or edited.");
-        socket.emit("board", {});
+        socket.emit("board", { boardId: value?.column?.boardId || value?.parentId });
         onCloseModal();
 
         return response.json();

@@ -60,7 +60,7 @@ function DetailCardComponent({ onClose, value }: Props) {
           className="gap-2 cursor-pointer"
           onClick={() => {
             setAction("deleteCard");
-            setActionData({ card });
+            setActionData({ card, boardId: value?.boardId });
           }}
         >
           <Trash2 className="h-4 w-4" />
@@ -70,7 +70,7 @@ function DetailCardComponent({ onClose, value }: Props) {
           className="gap-2 cursor-pointer"
           onClick={() => {
             setAction("upsertCard");
-            setActionData({ card });
+            setActionData({ card, boardId: value?.boardId });
           }}
         >
           <Pencil className="h-4 w-4" />

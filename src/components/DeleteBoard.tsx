@@ -45,7 +45,7 @@ function DeleteBoardComponent({ onClose, board }: Props) {
         }
 
         toast.success("The board has been successfully deleted.");
-        socket.emit("board", {});
+        socket.emit("board", { boardId: board?.id });
         onCloseModal();
 
         return response.json();

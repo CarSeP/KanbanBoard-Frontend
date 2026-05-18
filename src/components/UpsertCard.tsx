@@ -71,7 +71,7 @@ function UpsertCardComponent({ onClose, value }: Props) {
         }
 
         toast.success("The card has been successfully created or edited.");
-        socket.emit("board", {});
+        socket.emit("board", { boardId: value?.boardId });
 
         const data = await response.json();
         if (data.success && data.card) {

@@ -51,7 +51,7 @@ function DeleteCardComponent({ onClose, value }: Props) {
         }
 
         toast.success("The card has been successfully deleted.");
-        socket.emit("board", {});
+        socket.emit("board", { boardId: value?.boardId });
         onCloseModal();
 
         return response.json();

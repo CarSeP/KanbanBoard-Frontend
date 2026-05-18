@@ -40,7 +40,7 @@ function deleteColumnComponent({ onClose, value }: Props) {
         }
 
         toast.success("The column has been successfully deleted.");
-        socket.emit("board", {});
+        socket.emit("board", { boardId: value?.column?.boardId });
         onCloseModal();
 
         return response.json();

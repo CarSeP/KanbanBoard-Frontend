@@ -6,9 +6,10 @@ import { useSetAtom } from "jotai";
 interface Props {
   order: number;
   columnId: number;
+  boardId: string;
 }
 
-function AddCardComponent({ order, columnId }: Props) {
+function AddCardComponent({ order, columnId, boardId }: Props) {
   const setAction = useSetAtom(setActionAtom);
   const setActionData = useSetAtom(setActionDataAtom);
 
@@ -20,7 +21,7 @@ function AddCardComponent({ order, columnId }: Props) {
         className="h-7 w-7 text-muted-foreground hover:text-foreground cursor-pointer"
         onClick={() => {
           setAction("upsertCard");
-          setActionData({ order, parentId: columnId });
+          setActionData({ order, parentId: columnId, boardId });
         }}
       >
         <Plus className="h-4 w-4" />

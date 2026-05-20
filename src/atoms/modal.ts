@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import type { Board } from "../interfaces/board.interface";
 
-type Modal = "detail" | "delete" | "upsert" | "none";
+type Modal = "detail" | "delete" | "upsert" | "invite" | "none";
 type ModalData = Board | undefined;
 
 export const modalAtom = atom<Modal>("none");

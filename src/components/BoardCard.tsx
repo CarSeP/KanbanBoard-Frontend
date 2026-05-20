@@ -70,6 +70,26 @@ function BoardCardComponent({ board }: Props) {
                 className="cursor-pointer"
                 onClick={(e) => {
                   e.stopPropagation();
+                  setModal("invite");
+                  setModalData(board);
+                }}
+              >
+                Invite User
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                className="cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setModal("invite");
+                  setModalData(board);
+                }}
+              >
+                Create Invite Link
+              </DropdownMenuLabel>
+              <DropdownMenuLabel
+                className="cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
                   setModal("delete");
                   setModalData(board);
                 }}

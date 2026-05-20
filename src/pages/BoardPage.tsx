@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { socket } from "../lib/socket";
+import { authErrorHandler } from "@/lib/auth";
 import BoardComponent from "../components/Board";
 import BoardHeaderComponent from "../components/BoardHeader";
 
@@ -16,9 +17,12 @@ function BoardDetailPage() {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["getBoard"],
     queryFn: () =>
-      fetch(`${URL}/${id}`, { credentials: "include" }).then((res) =>
-        res.json(),
-      ),
+      fetch(`${URL}/${id}`, { credentials: "include" }).then((res) => {
+        if (authErrorHandler(res.status)) {
+          return;
+        }
+        return res.json();
+      }),
   });
 
   useEffect(() => {

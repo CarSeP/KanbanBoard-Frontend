@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { socket } from "../lib/socket";
 import LoaderComponent from "../components/Loader";
+import { authErrorHandler } from "@/lib/auth";
 
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/board";
 
@@ -14,7 +15,12 @@ function HomePage() {
       fetch(URL, {
         credentials: "include",
         method: "GET",
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (authErrorHandler(res.status)) {
+          return;
+        }
+        return res.json();
+      }),
   });
 
   useEffect(() => {

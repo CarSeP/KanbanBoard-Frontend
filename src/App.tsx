@@ -6,7 +6,6 @@ import AuthPage from "./pages/AuthPage";
 import InviteAcceptPage from "./pages/InviteAcceptPage";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AuthGuardian from "./components/AuthGuardian";
 
 const queryClient = new QueryClient();
 
@@ -15,14 +14,12 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Toaster richColors expand={true} position="top-center" />
-        <AuthGuardian>
-          <Routes>
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/board/:id" element={<BoardPage />} />
-            <Route path="/invite/:token" element={<InviteAcceptPage />} />
-          </Routes>
-        </AuthGuardian>
+        <Routes>
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/board/:id" element={<BoardPage />} />
+          <Route path="/invite/:token" element={<InviteAcceptPage />} />
+        </Routes>
       </BrowserRouter>
     </QueryClientProvider>
   );

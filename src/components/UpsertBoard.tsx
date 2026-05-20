@@ -14,6 +14,7 @@ import { Label } from "@radix-ui/react-label";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
 import { socket } from "../lib/socket";
+import { authErrorHandler } from "@/lib/auth";
 
 interface Props {
   onClose: () => void;
@@ -49,7 +50,6 @@ function UpsertBoardComponent({ onClose, board }: Props) {
         if (!payload.id) {
           delete payload.id;
         }
-
         const response = await fetch(URL, {
           credentials: "include",
           method: "PUT",
@@ -58,6 +58,10 @@ function UpsertBoardComponent({ onClose, board }: Props) {
             "Content-Type": "application/json",
           },
         });
+
+        if (authErrorHandler(response.status)) {
+          return;
+        }
 
         if (!response.ok) {
           throw new Error();

@@ -3,12 +3,14 @@ import { Dialog, DialogContent } from "./ui/dialog";
 import { useEffect, useState } from "react";
 import BoardDetailComponent from "./BoardDetail";
 import DeleteBoardComponent from "./DeleteBoard";
+import InviteBoardComponent from "./InviteBoard";
 import UpsertBoardComponent from "./UpsertBoard";
 import { modalAtom, modalDataAtom } from "../atoms/modal";
 
 const modalComponents = {
   detail: BoardDetailComponent,
   delete: DeleteBoardComponent,
+  invite: InviteBoardComponent,
   upsert: UpsertBoardComponent,
   none: null,
 };

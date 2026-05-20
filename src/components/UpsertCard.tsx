@@ -17,6 +17,7 @@ import { Button } from "./ui/button";
 import { LoaderCircle } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { setActionAtom, setActionDataAtom } from "../atoms/boardAction";
+import { authErrorHandler } from "@/lib/auth";
 
 interface Props {
   onClose: () => void;
@@ -65,6 +66,10 @@ function UpsertCardComponent({ onClose, value }: Props) {
             "Content-Type": "application/json",
           },
         });
+
+        if (authErrorHandler(response.status)) {
+          return;
+        }
 
         if (!response.ok) {
           throw new Error();

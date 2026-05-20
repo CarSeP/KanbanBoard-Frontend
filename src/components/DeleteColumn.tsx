@@ -1,4 +1,9 @@
-import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
@@ -7,6 +12,7 @@ import { LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import { socket } from "../lib/socket";
 import type { ActionValue } from "../interfaces/action.interface";
+import { authErrorHandler } from "@/lib/auth";
 
 interface Props {
   onClose: () => void;
@@ -34,6 +40,10 @@ function deleteColumnComponent({ onClose, value }: Props) {
           method: "DELETE",
           credentials: "include",
         });
+
+        if (authErrorHandler(response.status)) {
+          return;
+        }
 
         if (!response.ok) {
           throw new Error();

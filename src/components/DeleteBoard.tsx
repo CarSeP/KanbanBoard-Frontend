@@ -12,6 +12,7 @@ import { type FormEvent } from "react";
 import { LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import { socket } from "../lib/socket";
+import { authErrorHandler } from "@/lib/auth";
 
 interface Props {
   onClose: () => void;
@@ -39,6 +40,10 @@ function DeleteBoardComponent({ onClose, board }: Props) {
           method: "DELETE",
           credentials: "include",
         });
+
+        if (authErrorHandler(response.status)) {
+          return;
+        }
 
         if (!response.ok) {
           throw new Error();

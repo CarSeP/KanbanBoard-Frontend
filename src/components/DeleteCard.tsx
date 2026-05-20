@@ -1,4 +1,9 @@
-import { DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
 import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "@tanstack/react-form";
@@ -9,6 +14,7 @@ import { socket } from "../lib/socket";
 import type { ActionValue } from "../interfaces/action.interface";
 import { useSetAtom } from "jotai";
 import { setActionAtom, setActionDataAtom } from "../atoms/boardAction";
+import { authErrorHandler } from "@/lib/auth";
 
 const URL = import.meta.env.VITE_BACKEND_API_URL + "/card";
 
@@ -45,6 +51,10 @@ function DeleteCardComponent({ onClose, value }: Props) {
           method: "DELETE",
           credentials: "include",
         });
+
+        if (authErrorHandler(response.status)) {
+          return;
+        }
 
         if (!response.ok) {
           throw new Error();

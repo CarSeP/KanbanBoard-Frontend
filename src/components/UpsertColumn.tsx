@@ -14,6 +14,7 @@ import { socket } from "../lib/socket";
 import type { FormEvent } from "react";
 import { Button } from "./ui/button";
 import type { ActionValue } from "../interfaces/action.interface";
+import { authErrorHandler } from "@/lib/auth";
 
 interface Props {
   onClose: () => void;
@@ -63,12 +64,18 @@ function UpsertColumnComponent({ onClose, value }: Props) {
           },
         });
 
+        if (authErrorHandler(response.status)) {
+          return;
+        }
+
         if (!response.ok) {
           throw new Error();
         }
 
         toast.success("The column has been successfully created or edited.");
-        socket.emit("board", { boardId: value?.column?.boardId || value?.parentId });
+        socket.emit("board", {
+          boardId: value?.column?.boardId || value?.parentId,
+        });
         onCloseModal();
 
         return response.json();

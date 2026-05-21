@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import BoardPage from "./pages/BoardPage";
 import AuthPage from "./pages/AuthPage";
 import InviteAcceptPage from "./pages/InviteAcceptPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/board/:id" element={<BoardPage />} />
           <Route path="/invite/:token" element={<InviteAcceptPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
